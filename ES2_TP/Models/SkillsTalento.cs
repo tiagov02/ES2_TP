@@ -7,5 +7,6 @@
         public Skills? skill { get; set; }
         public float? preco { get; set; }
         public float numHoras { get; set; }
+       
     }
 }
