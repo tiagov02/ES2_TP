@@ -14,6 +14,18 @@ namespace ES2_TP.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        public IActionResult CriarCategoria()
+        {
+            var talentoCategoria = new List<SelectListItem>();
+            foreach(Categoria cat in _context.Categoria)
+            {
+                talentoCategoria.Add(new SelectListItem { Text = cat.descricao, Value = cat.Id.ToString() });
+            }
+
+            ViewData["Id"] = new SelectList(_context.Categoria, "Id", "Descricao");
+            return View();
+        }
+
         public TalentoesController(ApplicationDbContext context)
         {
             _context = context;

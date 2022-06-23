@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ES2_TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220623115631_001")]
+    [Migration("20220623144508_001")]
     partial class _001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,6 +244,13 @@ namespace ES2_TP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CategoriaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float>("horasExperiencia")
                         .HasColumnType("real");
 
@@ -259,6 +266,8 @@ namespace ES2_TP.Data.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Talento");
                 });
@@ -468,6 +477,17 @@ namespace ES2_TP.Data.Migrations
                     b.Navigation("skill");
 
                     b.Navigation("talento");
+                });
+
+            modelBuilder.Entity("ES2_TP.Models.Talento", b =>
+                {
+                    b.HasOne("ES2_TP.Models.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

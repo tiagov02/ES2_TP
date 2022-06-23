@@ -242,6 +242,9 @@ namespace ES2_TP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CategoriaId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -261,6 +264,8 @@ namespace ES2_TP.Data.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Talento");
                 });
@@ -470,6 +475,17 @@ namespace ES2_TP.Data.Migrations
                     b.Navigation("skill");
 
                     b.Navigation("talento");
+                });
+
+            modelBuilder.Entity("ES2_TP.Models.Talento", b =>
+                {
+                    b.HasOne("ES2_TP.Models.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

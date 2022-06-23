@@ -65,21 +65,6 @@ namespace ES2_TP.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Talento",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    precoHora = table.Column<float>(type: "real", nullable: false),
-                    horasExperiencia = table.Column<float>(type: "real", nullable: false),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    pais = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Talento", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PropostasTrabalho",
                 columns: table => new
                 {
@@ -119,6 +104,29 @@ namespace ES2_TP.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Skills_Categoria_categoriaId",
                         column: x => x.categoriaId,
+                        principalTable: "Categoria",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Talento",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    precoHora = table.Column<float>(type: "real", nullable: false),
+                    horasExperiencia = table.Column<float>(type: "real", nullable: false),
+                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    pais = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Talento", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Talento_Categoria_CategoriaId",
+                        column: x => x.CategoriaId,
                         principalTable: "Categoria",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -233,6 +241,11 @@ namespace ES2_TP.Data.Migrations
                 name: "IX_SkillsTalento_talentoId",
                 table: "SkillsTalento",
                 column: "talentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Talento_CategoriaId",
+                table: "Talento",
+                column: "CategoriaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
