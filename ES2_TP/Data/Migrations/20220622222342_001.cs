@@ -55,13 +55,6 @@ namespace ES2_TP.Data.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<string>(
-                name: "telefone",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.AlterColumn<string>(
                 name: "ProviderKey",
                 table: "AspNetUserLogins",
@@ -298,10 +291,6 @@ namespace ES2_TP.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "pais",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "telefone",
                 table: "AspNetUsers");
 
             migrationBuilder.AlterColumn<string>(

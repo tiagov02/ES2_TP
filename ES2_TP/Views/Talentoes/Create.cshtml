@@ -1,17 +1,10 @@
 ﻿@model ES2_TP.Models.Talento
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Create";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
+<h1>Create</h1>
 
 <h4>Talento</h4>
 <hr />
@@ -30,6 +23,16 @@
                 <span asp-validation-for="horasExperiencia" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="nome" class="control-label"></label>
+                <input asp-for="nome" class="form-control" />
+                <span asp-validation-for="nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="pais" class="control-label"></label>
+                <input asp-for="pais" class="form-control" />
+                <span asp-validation-for="pais" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -43,5 +46,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ES2_TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220622171246_001")]
-    partial class _001
+    [Migration("20220622230808_002")]
+    partial class _002
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,10 +88,6 @@ namespace ES2_TP.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("pais")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("telefone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -261,6 +257,14 @@ namespace ES2_TP.Data.Migrations
 
                     b.Property<float>("horasExperiencia")
                         .HasColumnType("real");
+
+                    b.Property<string>("nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("pais")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("precoHora")
                         .HasColumnType("real");

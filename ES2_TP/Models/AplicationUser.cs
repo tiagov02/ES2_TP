@@ -5,6 +5,6 @@
         public bool IsAdmin { get; set; }
         public string nome { get; set; }
         public string pais { get; set; }
-        public string telefone { get; set; }
+        //public string telefone { get; set; }
     }
 }

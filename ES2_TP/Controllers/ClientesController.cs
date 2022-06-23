@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ES2_TP.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
