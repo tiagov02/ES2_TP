@@ -34,27 +34,6 @@ namespace ES2_TP.Data.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsAdmin",
-                table: "AspNetUsers",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
-
-            migrationBuilder.AddColumn<string>(
-                name: "nome",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "pais",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.AlterColumn<string>(
                 name: "ProviderKey",
                 table: "AspNetUserLogins",
@@ -91,7 +70,9 @@ namespace ES2_TP.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     precoHora = table.Column<float>(type: "real", nullable: false),
-                    horasExperiencia = table.Column<float>(type: "real", nullable: false)
+                    horasExperiencia = table.Column<float>(type: "real", nullable: false),
+                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    pais = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -279,18 +260,6 @@ namespace ES2_TP.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Discriminator",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "IsAdmin",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "nome",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "pais",
                 table: "AspNetUsers");
 
             migrationBuilder.AlterColumn<string>(
