@@ -12,5 +12,6 @@
         public Categoria? Categoria { get; set; }
         public Guid IdSkill { get; set; }
         public Skills? Skill { get; set; }
+        public bool isPublic { get; set; }
     }
 }
