@@ -14,18 +14,6 @@ namespace ES2_TP.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public IActionResult CriarCategoria()
-        {
-            var talentoCategoria = new List<SelectListItem>();
-            foreach(Categoria cat in _context.Categoria)
-            {
-                talentoCategoria.Add(new SelectListItem { Text = cat.descricao, Value = cat.Id.ToString() });
-            }
-
-            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "Descricao");
-            return View();
-        }
-
         public TalentoesController(ApplicationDbContext context)
         {
             _context = context;
@@ -60,6 +48,13 @@ namespace ES2_TP.Controllers
         // GET: Talentoes/Create
         public IActionResult Create()
         {
+            /*var talentoCategoria = new List<SelectListItem>();
+            foreach (Categoria cat in _context.Categoria)
+            {
+                talentoCategoria.Add(new SelectListItem { Text = cat.descricao, Value = cat.Id.ToString() });
+            }*/
+
+            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
             return View();
         }
 
@@ -68,8 +63,8 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,precoHora,horasExperiencia,nome,pais,email")] Talento talento)
-        {
+        public async Task<IActionResult> Create([Bind("Id,precoHora,horasExperiencia,nome,pais,email,Categoria")] Talento talento)
+        { 
             if (ModelState.IsValid)
             {
                 talento.Id = Guid.NewGuid();
