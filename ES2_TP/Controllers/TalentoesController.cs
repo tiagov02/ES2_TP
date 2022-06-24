@@ -22,7 +22,7 @@ namespace ES2_TP.Controllers
                 talentoCategoria.Add(new SelectListItem { Text = cat.descricao, Value = cat.Id.ToString() });
             }
 
-            ViewData["Id"] = new SelectList(_context.Categoria, "Id", "Descricao");
+            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "Descricao");
             return View();
         }
 

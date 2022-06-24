@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ES2_TP.Data;
+using ES2_TP.Models;
+
+namespace ES2_TP.Controllers
+{
+    public class AplicationUserController : Controller
+    {
+    }
+}

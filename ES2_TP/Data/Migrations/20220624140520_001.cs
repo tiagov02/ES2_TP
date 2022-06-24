@@ -34,6 +34,13 @@ namespace ES2_TP.Data.Migrations
                 nullable: false,
                 defaultValue: "");
 
+            migrationBuilder.AddColumn<int>(
+                name: "UserType",
+                table: "AspNetUsers",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.AlterColumn<string>(
                 name: "ProviderKey",
                 table: "AspNetUserLogins",
@@ -273,6 +280,10 @@ namespace ES2_TP.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Discriminator",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "UserType",
                 table: "AspNetUsers");
 
             migrationBuilder.AlterColumn<string>(
