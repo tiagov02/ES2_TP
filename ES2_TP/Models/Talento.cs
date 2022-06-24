@@ -8,6 +8,7 @@
         public string nome { get; set; }
         public string pais { get; set; }
         public string email { get; set; }
-        public Categoria Categoria { get; set; }
+        public Guid IdCategoria { get; set; }
+        public Categoria? Categoria { get; set; }
     }
 }

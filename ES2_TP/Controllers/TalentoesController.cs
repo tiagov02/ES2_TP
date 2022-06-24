@@ -63,7 +63,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,precoHora,horasExperiencia,nome,pais,email,Categoria")] Talento talento)
+        public async Task<IActionResult> Create([Bind("Id,precoHora,horasExperiencia,nome,pais,email,IdCategoria")] Talento talento)
         { 
             if (ModelState.IsValid)
             {
