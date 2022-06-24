@@ -10,5 +10,7 @@
         public string email { get; set; }
         public Guid IdCategoria { get; set; }
         public Categoria? Categoria { get; set; }
+        public Guid IdSkill { get; set; }
+        public Skills? Skill { get; set; }
     }
 }

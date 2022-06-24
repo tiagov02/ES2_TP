@@ -4,6 +4,7 @@ using ES2_TP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ES2_TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220624174554_004")]
+    partial class _004
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,12 +273,6 @@ namespace ES2_TP.Data.Migrations
                     b.Property<Guid>("IdCategoria")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdSkill")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("SkillId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -298,8 +294,6 @@ namespace ES2_TP.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
-
-                    b.HasIndex("SkillId");
 
                     b.ToTable("Talento");
                 });
@@ -510,13 +504,7 @@ namespace ES2_TP.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CategoriaId");
 
-                    b.HasOne("ES2_TP.Models.Skills", "Skill")
-                        .WithMany()
-                        .HasForeignKey("SkillId");
-
                     b.Navigation("Categoria");
-
-                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
