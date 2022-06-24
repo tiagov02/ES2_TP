@@ -87,6 +87,8 @@ namespace ES2_TP.Controllers
             {
                 return NotFound();
             }
+            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
+            ViewData["Skill"] = new SelectList(_context.Skills, "Id", "descricao");
 
             var talento = await _context.Talento.FindAsync(id);
             if (talento == null)
@@ -110,6 +112,10 @@ namespace ES2_TP.Controllers
 
             if (ModelState.IsValid)
             {
+                var cat = await _context.Categoria.FindAsync(talento.IdCategoria);
+                talento.Categoria = cat;
+                var sk = await _context.Skills.FindAsync(talento.IdSkill);
+                talento.Skill = sk;
                 try
                 {
                     _context.Update(talento);

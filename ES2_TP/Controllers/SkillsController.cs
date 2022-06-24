@@ -62,6 +62,8 @@ namespace ES2_TP.Controllers
             if (ModelState.IsValid)
             {
                 skills.Id = Guid.NewGuid();
+                var cat = await _context.Categoria.FirstOrDefaultAsync(m => m.Id == skills.IdCategoria);
+                skills.categoria = cat;
                 _context.Add(skills);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -76,6 +78,7 @@ namespace ES2_TP.Controllers
             {
                 return NotFound();
             }
+            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
 
             var skills = await _context.Skills.FindAsync(id);
             if (skills == null)
@@ -99,6 +102,8 @@ namespace ES2_TP.Controllers
 
             if (ModelState.IsValid)
             {
+                var cat = await _context.Categoria.FindAsync(skills.IdCategoria);
+                skills.categoria = cat;
                 try
                 {
                     _context.Update(skills);

@@ -1,7 +1,7 @@
 ﻿@model ES2_TP.Models.Skills
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Details";
 }
 
 <!DOCTYPE html>
@@ -20,8 +20,14 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.descricao)
         </dt>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.categoria.descricao)
+        </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.descricao)
+        </dd>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.categoria.descricao)
         </dd>
     </dl>
 </div>

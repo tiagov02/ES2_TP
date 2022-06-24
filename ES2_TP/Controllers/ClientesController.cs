@@ -57,7 +57,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,telefone,mail,IdSkill,IdTalento")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Id,Name,telefone,mail,IdTalento")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -77,6 +77,7 @@ namespace ES2_TP.Controllers
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            ViewData["Talento"] = new SelectList(_context.Talento, "Id", "nome");
             if (id == null || _context.Cliente == null)
             {
                 return NotFound();
@@ -104,6 +105,11 @@ namespace ES2_TP.Controllers
 
             if (ModelState.IsValid)
             {
+                if (cliente.IdTalento != null)
+                {
+                    var tal = await _context.Talento.FindAsync(cliente.IdTalento);
+                    cliente.Talento = tal;
+                }
                 try
                 {
                     _context.Update(cliente);
