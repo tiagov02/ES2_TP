@@ -10,6 +10,11 @@ using ES2_TP.Models;
 
 namespace ES2_TP.Controllers
 {
+    /*public class TipoVista
+    {
+        public bool IsPublic { get; set; }
+        public string Tipo_De_Perfil { get; set; }
+    }*/
     public class TalentoesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -53,7 +58,10 @@ namespace ES2_TP.Controllers
             {
                 talentoCategoria.Add(new SelectListItem { Text = cat.descricao, Value = cat.Id.ToString() });
             }*/
-
+            /*List<TipoVista> vista = new List<TipoVista>();
+            vista.Add( new TipoVista() { IsPublic = true, Tipo_De_Perfil="Público"  });
+            vista.Add(new TipoVista() { IsPublic = false, Tipo_De_Perfil = "Privado" });
+            ViewData["Perfil"] = new SelectList(vista, "IsPublic", "Tipo_De_Perfil");*/
             ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
             ViewData["Skill"] = new SelectList(_context.Skills, "Id", "descricao");
             return View();
