@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ES2_TP.Data;
 using ES2_TP.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ES2_TP.Controllers
 {
-    //[Authorize(Roles = "Admin")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -50,6 +48,7 @@ namespace ES2_TP.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
+            ViewData["Talento"] = new SelectList(_context.Talento, "Id", "nome");
             return View();
         }
 
@@ -58,10 +57,15 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Id,Name,telefone,mail,IdSkill,IdTalento")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
+                if(cliente.IdTalento != null)
+                {
+                    var tal = await _context.Talento.FindAsync(cliente.IdTalento);
+                    cliente.Talento = tal;
+                }
                 cliente.Id = Guid.NewGuid();
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
@@ -91,7 +95,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id")] Cliente cliente)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,telefone,mail")] Cliente cliente)
         {
             if (id != cliente.Id)
             {

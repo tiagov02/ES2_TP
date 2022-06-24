@@ -4,6 +4,7 @@ using ES2_TP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ES2_TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220624183209_010")]
+    partial class _010
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,12 +207,6 @@ namespace ES2_TP.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdCategoria")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdSkill")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -220,6 +216,12 @@ namespace ES2_TP.Data.Migrations
 
                     b.Property<float>("TotalHoras")
                         .HasColumnType("real");
+
+                    b.Property<Guid>("idCategoria")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("idSkill")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

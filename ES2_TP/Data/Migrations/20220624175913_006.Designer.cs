@@ -4,6 +4,7 @@ using ES2_TP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ES2_TP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220624175913_006")]
+    partial class _006
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,15 +113,9 @@ namespace ES2_TP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("IdTalento")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("TalentoId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("mail")
                         .IsRequired()
@@ -130,8 +126,6 @@ namespace ES2_TP.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TalentoId");
 
                     b.ToTable("Cliente");
                 });
@@ -195,37 +189,25 @@ namespace ES2_TP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("AnosExperiencia")
-                        .HasColumnType("real");
-
-                    b.Property<Guid?>("CategoriaId")
+                    b.Property<Guid>("categoriaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Descricao")
+                    b.Property<Guid>("clienteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdCategoria")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdSkill")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
+                    b.Property<string>("nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("SkillId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<float>("TotalHoras")
-                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("categoriaId");
 
-                    b.HasIndex("SkillId");
+                    b.HasIndex("clienteId");
 
                     b.ToTable("PropostasTrabalho");
                 });
@@ -457,15 +439,6 @@ namespace ES2_TP.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ES2_TP.Models.Cliente", b =>
-                {
-                    b.HasOne("ES2_TP.Models.Talento", "Talento")
-                        .WithMany()
-                        .HasForeignKey("TalentoId");
-
-                    b.Navigation("Talento");
-                });
-
             modelBuilder.Entity("ES2_TP.Models.DetalheExperiencia", b =>
                 {
                     b.HasOne("ES2_TP.Models.Talento", "talento")
@@ -492,17 +465,21 @@ namespace ES2_TP.Data.Migrations
 
             modelBuilder.Entity("ES2_TP.Models.PropostasTrabalho", b =>
                 {
-                    b.HasOne("ES2_TP.Models.Categoria", "Categoria")
+                    b.HasOne("ES2_TP.Models.Categoria", "categoria")
                         .WithMany()
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("categoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ES2_TP.Models.Skills", "Skill")
+                    b.HasOne("ES2_TP.Models.Cliente", "cliente")
                         .WithMany()
-                        .HasForeignKey("SkillId");
+                        .HasForeignKey("clienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Categoria");
+                    b.Navigation("categoria");
 
-                    b.Navigation("Skill");
+                    b.Navigation("cliente");
                 });
 
             modelBuilder.Entity("ES2_TP.Models.Skills", b =>

@@ -5,6 +5,6 @@
         public Guid Id { get; set; }
         public Categoria? categoria { get; set; } 
         public string? descricao { get; set; }
-        public Guid idCategoria { get; set; }
+        public Guid IdCategoria { get; set; }
     }
 }

@@ -10,100 +10,94 @@ using ES2_TP.Models;
 
 namespace ES2_TP.Controllers
 {
-    public class TalentoesController : Controller
+    public class PropostasTrabalhosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TalentoesController(ApplicationDbContext context)
+        public PropostasTrabalhosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Talentoes
+        // GET: PropostasTrabalhos
         public async Task<IActionResult> Index()
         {
-              return _context.Talento != null ? 
-                          View(await _context.Talento.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Talento'  is null.");
+              return _context.PropostasTrabalho != null ? 
+                          View(await _context.PropostasTrabalho.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.PropostasTrabalho'  is null.");
         }
 
-        // GET: Talentoes/Details/5
+        // GET: PropostasTrabalhos/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Talento == null)
+            if (id == null || _context.PropostasTrabalho == null)
             {
                 return NotFound();
             }
 
-            var talento = await _context.Talento
+            var propostasTrabalho = await _context.PropostasTrabalho
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (talento == null)
+            if (propostasTrabalho == null)
             {
                 return NotFound();
             }
 
-            return View(talento);
+            return View(propostasTrabalho);
         }
 
-        // GET: Talentoes/Create
+        // GET: PropostasTrabalhos/Create
         public IActionResult Create()
         {
-            /*var talentoCategoria = new List<SelectListItem>();
-            foreach (Categoria cat in _context.Categoria)
-            {
-                talentoCategoria.Add(new SelectListItem { Text = cat.descricao, Value = cat.Id.ToString() });
-            }*/
-
             ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
             ViewData["Skill"] = new SelectList(_context.Skills, "Id", "descricao");
             return View();
         }
 
-        // POST: Talentoes/Create
+        // POST: PropostasTrabalhos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,precoHora,horasExperiencia,nome,pais,email,IdCategoria,IdSkill")] Talento talento)
-        { 
+        public async Task<IActionResult> Create([Bind("Id,AnosExperiencia,TotalHoras,Nome,Descricao,IdCategoria,IdSkill")] PropostasTrabalho propostasTrabalho)
+        {
             if (ModelState.IsValid)
             {
-                talento.Id = Guid.NewGuid();
-                var cat = await _context.Categoria.FindAsync(talento.IdCategoria);
-                talento.Categoria = cat;
-                var sk = await _context.Skills.FindAsync(talento.IdSkill);
-                talento.Skill = sk;
-                _context.Add(talento);
+                propostasTrabalho.Id = Guid.NewGuid();
+                var cat = await _context.Categoria.FindAsync(propostasTrabalho.IdCategoria);
+                propostasTrabalho.Categoria = cat;
+                var sk = await _context.Skills.FindAsync(propostasTrabalho.IdSkill);
+                propostasTrabalho.Skill = sk;
+                _context.Add(propostasTrabalho);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(talento);
+            return View(propostasTrabalho);
         }
 
-        // GET: Talentoes/Edit/5
+        // GET: PropostasTrabalhos/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Talento == null)
+            if (id == null || _context.PropostasTrabalho == null)
             {
                 return NotFound();
             }
 
-            var talento = await _context.Talento.FindAsync(id);
-            if (talento == null)
+            var propostasTrabalho = await _context.PropostasTrabalho.FindAsync(id);
+            if (propostasTrabalho == null)
             {
                 return NotFound();
             }
-            return View(talento);
+            return View(propostasTrabalho);
         }
 
-        // POST: Talentoes/Edit/5
+        // POST: PropostasTrabalhos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,precoHora,horasExperiencia,nome,pais,email")] Talento talento)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,AnosExperiencia,TotalHoras,Nome,Descricao")] PropostasTrabalho propostasTrabalho)
         {
-            if (id != talento.Id)
+            if (id != propostasTrabalho.Id)
             {
                 return NotFound();
             }
@@ -112,12 +106,12 @@ namespace ES2_TP.Controllers
             {
                 try
                 {
-                    _context.Update(talento);
+                    _context.Update(propostasTrabalho);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TalentoExists(talento.Id))
+                    if (!PropostasTrabalhoExists(propostasTrabalho.Id))
                     {
                         return NotFound();
                     }
@@ -128,49 +122,49 @@ namespace ES2_TP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(talento);
+            return View(propostasTrabalho);
         }
 
-        // GET: Talentoes/Delete/5
+        // GET: PropostasTrabalhos/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Talento == null)
+            if (id == null || _context.PropostasTrabalho == null)
             {
                 return NotFound();
             }
 
-            var talento = await _context.Talento
+            var propostasTrabalho = await _context.PropostasTrabalho
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (talento == null)
+            if (propostasTrabalho == null)
             {
                 return NotFound();
             }
 
-            return View(talento);
+            return View(propostasTrabalho);
         }
 
-        // POST: Talentoes/Delete/5
+        // POST: PropostasTrabalhos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Talento == null)
+            if (_context.PropostasTrabalho == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Talento'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.PropostasTrabalho'  is null.");
             }
-            var talento = await _context.Talento.FindAsync(id);
-            if (talento != null)
+            var propostasTrabalho = await _context.PropostasTrabalho.FindAsync(id);
+            if (propostasTrabalho != null)
             {
-                _context.Talento.Remove(talento);
+                _context.PropostasTrabalho.Remove(propostasTrabalho);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TalentoExists(Guid id)
+        private bool PropostasTrabalhoExists(Guid id)
         {
-          return (_context.Talento?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.PropostasTrabalho?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
