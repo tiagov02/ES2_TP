@@ -1,4 +1,53 @@
-﻿@page
-@model ES2_TP.Views.Users.CreateModel
+﻿@model ES2_TP.Models.AplicationUser
+
 @{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Talento</h4>
+<h5>ATENÇÃO: NA CRIAÇÃO DE UTILIZADORES A PASSWORD POR DEFEITO É:</h5>
+<p font-weight:bold>23456qA!</p>
+<p>Para mais segurança dos utilizadores DEVERÁ O UTILIZADOR MUDAR A PALAVRA-PASSE NA SUA PRIMEIRA ENTRADA!!</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class=" form-group">
+                <select asp-for="UserType">
+                    <option value="1">Admin</option>
+                    <option value="2">User</option>
+                    <option value="3">Manager</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
