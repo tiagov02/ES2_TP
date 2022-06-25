@@ -6,14 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ES2_TP.Controllers
 {
-    public class ModelUser
-    {
-        public string UserName { get; set; } 
-        public string Email { get; set; } 
-        public string PhoneNumber { get; set; }
-        public int UserType { get; set; } 
-        public string Password { get; set; }
-    }
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -114,6 +106,65 @@ namespace ES2_TP.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
+        }
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Talentoes/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("UserName,Email,PhoneNumber,UserType")] AplicationUser model)
+        {
+            var us = await _userManager.FindByIdAsync(id.ToString());
+            /*if (id.ToString() != model.Id)
+            {
+                return NotFound();
+            }*/
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    AplicationUser user = new AplicationUser()
+                    {
+                        //Id = id.ToString(),
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        PhoneNumber = model.PhoneNumber,
+                        UserType = model.UserType,
+                        SecurityStamp = us.SecurityStamp,
+                        PasswordHash = us.PasswordHash,
+                    };
+                    await _userManager.UpdateAsync(user);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (await _userManager.FindByIdAsync(id.ToString())==null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(us);
         }
 
         public async Task<IActionResult> Details(Guid? id)
