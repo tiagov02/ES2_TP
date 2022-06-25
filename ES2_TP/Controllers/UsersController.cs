@@ -128,7 +128,7 @@ namespace ES2_TP.Controllers
             {
                 return NotFound();
             }
-            /*if (await _userManager.IsInRoleAsync(user, "Admin"))
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
             {
                 user.UserType = 1;
             }
@@ -156,7 +156,8 @@ namespace ES2_TP.Controllers
             {
                 ViewBag.userType = "User Manager";
             }
-            ViewBag.userType = user.UserType;*/
+            ViewBag.userType = user.UserType;
+            
             return View(user);
         }
     }
