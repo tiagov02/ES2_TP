@@ -35,7 +35,7 @@ namespace ES2_TP.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
+            var cliente = await _context.Cliente.Include(e=>e.Talento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cliente == null)
             {
@@ -96,7 +96,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,telefone,mail")] Cliente cliente)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,telefone,mail,IdTalento")] Cliente cliente)
         {
             if (id != cliente.Id)
             {

@@ -13,16 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AnosExperiencia)
+                Anos de Experiência
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalHoras)
+                Horas pedidas
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Skill
             </th>
             <th></th>
         </tr>
@@ -41,6 +47,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Skill.descricao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

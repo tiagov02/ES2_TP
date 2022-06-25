@@ -23,7 +23,7 @@ namespace ES2_TP.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.PropostasTrabalho != null ? 
-                          View(await _context.PropostasTrabalho.ToListAsync()) :
+                          View(await _context.PropostasTrabalho.Include(e=>e.Categoria).Include(e=>e.Skill).ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.PropostasTrabalho'  is null.");
         }
 
@@ -36,6 +36,7 @@ namespace ES2_TP.Controllers
             }
 
             var propostasTrabalho = await _context.PropostasTrabalho
+                .Include(e => e.Categoria).Include(e => e.Skill)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propostasTrabalho == null)
             {
@@ -97,7 +98,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,AnosExperiencia,TotalHoras,Nome,Descricao")] PropostasTrabalho propostasTrabalho)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,AnosExperiencia,TotalHoras,Nome,Descricao,IdCategoria,IdSkill")] PropostasTrabalho propostasTrabalho)
         {
             if (id != propostasTrabalho.Id)
             {

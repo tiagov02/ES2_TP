@@ -55,6 +55,7 @@ namespace ES2_TP.Controllers
                 talentos = talentos.Where(e => e.isPublic == true);
             }
             
+            talentos = talentos.Include(e => e.Categoria).Include(e => e.Skill);
 
             ViewBag.searchstring = searchString;
 
@@ -69,7 +70,8 @@ namespace ES2_TP.Controllers
                 return NotFound();
             }
 
-            var talento = await _context.Talento
+            var talento = await _context.Talento.
+                Include(e => e.Categoria).Include(e => e.Skill)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (talento == null)
             {

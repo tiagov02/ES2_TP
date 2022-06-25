@@ -36,6 +36,7 @@ namespace ES2_TP.Controllers
             }
 
             var skills = await _context.Skills
+                .Include(e => e.categoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (skills == null)
             {

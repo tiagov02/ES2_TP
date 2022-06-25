@@ -20,12 +20,13 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.descricao)
         </dt>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.categoria.descricao)
-        </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.descricao)
         </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.categoria.descricao)*@
+            Categoria
+        </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.categoria.descricao)
         </dd>
