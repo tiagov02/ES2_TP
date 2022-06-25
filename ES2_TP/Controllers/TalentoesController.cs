@@ -32,6 +32,19 @@ namespace ES2_TP.Controllers
                           Problem("Entity set 'ApplicationDbContext.Talento'  is null.");
         }
 
+        public async Task<IActionResult> Index(string searchString)
+        {
+            var talentos = from m in _context.Talento
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                talentos = talentos.Where(s => s.nome!.Contains(searchString));
+            }
+
+            return View(await talentos.ToListAsync());
+        }
+
         // GET: Talentoes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
