@@ -9,12 +9,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<!--<form asp-controller="Talentoes" asp-action="Search" method="get">
-    <p>
-        Skill: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
-</form>-->
+    <form asp-controller="Talentoes" asp-action="Index" method="get">
+        <p>
+            Skill: <input type="text" name="SearchString" value="@ViewBag.searchstring" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
 <table class="table">
     <thead>
         <tr>

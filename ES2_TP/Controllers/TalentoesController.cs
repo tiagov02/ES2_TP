@@ -25,25 +25,41 @@ namespace ES2_TP.Controllers
         }
 
         // GET: Talentoes
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
               return _context.Talento != null ? 
                           View(await _context.Talento.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Talento'  is null.");
-        }
-
-        /*public async Task<IActionResult> Index(string searchString)
+        }*/
+        //[HttpPost]
+        public async Task<IActionResult> Index(string searchString)
         {
+
+            bool showPrivateTalents = User.IsInRole("Admin");
+
             var talentos = from m in _context.Talento
                          select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                talentos = talentos.Where(s => s.nome!.Contains(searchString));
+                searchString = searchString.ToLower();
+
+                talentos = talentos.
+                    Where(s => s.Skill.descricao!.ToLower().Contains(searchString) 
+                    || s.nome.ToLower().Contains(searchString)).
+                    OrderBy(talentos=>talentos.nome);
             }
 
+            if (showPrivateTalents is false)
+            {
+                talentos = talentos.Where(e => e.isPublic == true);
+            }
+            
+
+            ViewBag.searchstring = searchString;
+
             return View(await talentos.ToListAsync());
-        }*/
+        }
 
         // GET: Talentoes/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -76,7 +92,7 @@ namespace ES2_TP.Controllers
             vista.Add(new TipoVista() { IsPublic = false, Tipo_De_Perfil = "Privado" });
             ViewData["Perfil"] = new SelectList(vista, "IsPublic", "Tipo_De_Perfil");*/
             ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
-            ViewData["Skill"] = new SelectList(_context.Skills, "Id", "descricao");
+            ViewData["Skill"] = new SelectList(_context.Skills.OrderBy(s => s.descricao), "Id", "descricao");
             return View();
         }
 
@@ -124,7 +140,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,precoHora,horasExperiencia,nome,pais,email")] Talento talento)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,precoHora,horasExperiencia,nome,pais,email, IdCategoria, IdSkill")] Talento talento)
         {
             if (id != talento.Id)
             {

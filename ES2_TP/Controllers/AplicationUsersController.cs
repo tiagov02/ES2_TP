@@ -10,11 +10,11 @@ using ES2_TP.Models;
 
 namespace ES2_TP.Controllers
 {
-    public class AplicationUserController : Controller
+    public class AplicationUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AplicationUserController(ApplicationDbContext context)
+        public AplicationUsersController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -41,7 +41,7 @@ namespace ES2_TP.Controllers
                     SecurityStamp = Guid.NewGuid().ToString(),
                 };
 
-                //await _context.AspNetUsers.CreateAsync(user, user.Password);
+                //await _userManagerAspNetUsers.CreateAsync(user, user.Password);
                 //Duvida
             }
             return View();

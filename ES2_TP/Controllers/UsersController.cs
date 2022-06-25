@@ -19,9 +19,28 @@ namespace ES2_TP.Controllers
             _roleManager = roleManager;
         }
 
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
+
+            foreach (var item in users)
+            {
+                if (await _userManager.IsInRoleAsync(item, "Admin"))
+                {
+                    item.UserType = 1;
+                }
+
+                if (await _userManager.IsInRoleAsync(item, "User"))
+                {
+                    item.UserType = 2;
+                }
+
+                if (await _userManager.IsInRoleAsync(item, "UserManager"))
+                {
+                    item.UserType = 3;
+                }
+            }
+
             return View(users);
         }
     }

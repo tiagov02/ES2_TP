@@ -23,7 +23,7 @@ namespace ES2_TP.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Skills != null ? 
-                          View(await _context.Skills.ToListAsync()) :
+                          View(await _context.Skills.Include(e => e.categoria).ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Skills'  is null.");
         }
 
@@ -93,7 +93,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,descricao")] Skills skills)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,descricao,IdCategoria")] Skills skills)
         {
             if (id != skills.Id)
             {

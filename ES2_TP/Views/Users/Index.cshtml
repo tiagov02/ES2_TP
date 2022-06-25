@@ -1,1 +1,76 @@
-﻿<h1>Olá Mundo</h1>
+﻿@model IEnumerable<ES2_TP.Models.AplicationUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@*<select asp-for="">*@
+<select>
+    <option value="1">Admin</option>
+    <option value="2">User</option>
+    <option value="3">User manager</option>
+</select>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                ID
+            </th>
+
+            <th>
+                Role
+            </th>
+          
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+
+            <td>
+               
+                    @if(item.UserType == 1)
+                    {
+                        <span>Admin</span>
+                    }
+
+                    @if(item.UserType == 2)
+                    {
+                        <span>User</span>
+                    }
+
+                    @if(item.UserType == 3)
+                    {
+                        <span>User Manager</span>
+                    }
+
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
