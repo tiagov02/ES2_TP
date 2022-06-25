@@ -43,5 +43,55 @@ namespace ES2_TP.Controllers
 
             return View(users);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Password")] AplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                AplicationUser user = new AplicationUser()
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    UserType = model.UserType,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                };
+                await _userManager.CreateAsync(user, model.Password);
+                if (model.UserType == 1)
+                {
+                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    if (model.UserType == 2)
+                    {
+                        if (!await _roleManager.RoleExistsAsync("User"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("User"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+                    else
+                    {
+                        if (!await _roleManager.RoleExistsAsync("UserManager"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("UserManager"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "UserManager");
+                    }
+                }
+            }
+            return View(model);
+        }
     }
 }
