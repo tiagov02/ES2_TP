@@ -118,8 +118,8 @@ namespace ES2_TP.Controllers
                 try
                 {
                     await _userManager.UpdateAsync(user);
-                    await _userManager.SetEmailAsync(us, model.Email);
-                    await _userManager.SetUserNameAsync(us, model.Email);
+                    //await _userManager.SetEmailAsync(us, model.Email);
+                    //await _userManager.SetUserNameAsync(us, model.Email);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
