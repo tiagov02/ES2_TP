@@ -183,23 +183,7 @@ namespace ES2_TP.Controllers
             if (await _userManager.IsInRoleAsync(user, "UserManager"))
             {
                 user.UserType = 3;
-            }
-            if (user.UserType == 1)
-            {
-                ViewBag.userType = "Admin";
-            }
-
-            if(user.UserType == 2)
-            {
-                ViewBag.userType = "User";
-            }
-
-            if(user.UserType == 3)
-            {
-                ViewBag.userType = "User Manager";
-            }
-            ViewBag.userType = user.UserType;
-            
+            }            
             return View(user);
         }
     }

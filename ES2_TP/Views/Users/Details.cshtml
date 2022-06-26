@@ -26,7 +26,20 @@
             Role
         </dt>
         <dd class = "col-sm-10">
-            <span asp-for="ViewBag.userType" asp-itens="ViewBag.userType"></span>
+            @if(Model.UserType == 1)
+                    {
+                         <span>Admin</span>
+                    }
+
+                    @if(Model.UserType == 2)
+                    {
+                        <span>User</span>
+                    }
+
+                    @if(Model.UserType == 3)
+                    {
+                        <span>Manager</span>
+                    }
         </dd>
 
     </dl>
