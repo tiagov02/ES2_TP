@@ -132,7 +132,7 @@ namespace ES2_TP.Controllers
                 {
                     AplicationUser user = new AplicationUser()
                     {
-                        //Id = id.ToString(),
+                        Id = id.ToString(),
                         UserName = model.UserName,
                         Email = model.Email,
                         PhoneNumber = model.PhoneNumber,
