@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ES2_TP.Data;
 using ES2_TP.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ES2_TP.Controllers
 {
+
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -73,7 +76,6 @@ namespace ES2_TP.Controllers
             }
             return View(cliente);
         }
-
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {

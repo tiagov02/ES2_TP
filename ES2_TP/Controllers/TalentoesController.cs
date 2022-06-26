@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ES2_TP.Data;
 using ES2_TP.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ES2_TP.Controllers
 {
@@ -15,6 +16,7 @@ namespace ES2_TP.Controllers
         public bool IsPublic { get; set; }
         public string Tipo_De_Perfil { get; set; }
     }*/
+    [Authorize]
     public class TalentoesController : Controller
     {
         private readonly ApplicationDbContext _context;

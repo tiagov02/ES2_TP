@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ES2_TP.Data;
 using ES2_TP.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ES2_TP.Controllers
 {
+    [Authorize]
     public class PropostasTalentoesController : Controller
     {
         private readonly ApplicationDbContext _context;

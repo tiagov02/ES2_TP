@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ES2_TP.Data;
 using ES2_TP.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ES2_TP.Controllers
 {
@@ -48,6 +47,7 @@ namespace ES2_TP.Controllers
         public float PrecoTotal { get; set; }
     }
 
+    [Authorize]
     public class RelatoriosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -64,7 +64,7 @@ namespace ES2_TP.Controllers
         {
             Relatorio rel = new();
 
-            var t = await _context.Talento.Include(e=>e.Skill).ToListAsync();
+            var t = await _context.Talento.Include(e=>e.Categoria).ToListAsync();
            
 
             foreach (var item in t)

@@ -1,11 +1,13 @@
 ﻿using ES2_TP.Data;
 using ES2_TP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ES2_TP.Controllers
 {
+    
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -98,6 +100,7 @@ namespace ES2_TP.Controllers
             }
             return View(model);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -118,6 +121,7 @@ namespace ES2_TP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid id, [Bind("UserName,Email,PhoneNumber,UserType")] AplicationUser model)
         {
             var us = await _userManager.FindByIdAsync(id.ToString());
