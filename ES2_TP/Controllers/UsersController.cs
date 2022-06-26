@@ -69,6 +69,31 @@ namespace ES2_TP.Controllers
                 };
                 await _userManager.CreateAsync(user,"23456qA!");
                 model.Id = user.Id;
+                if (model.UserType == 1)
+                {
+                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+
+                if (model.UserType == 2)
+                {
+                    if (!await _roleManager.RoleExistsAsync("User"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("User"));
+                    }
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
+                if (model.UserType == 3)
+                {
+                    if (!await _roleManager.RoleExistsAsync("Manager"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Manager"));
+                    }
+                    await _userManager.AddToRoleAsync(user, "Manager");
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -125,11 +150,11 @@ namespace ES2_TP.Controllers
                 }
                     if (us.UserType == 2)
                     {
-                        await _userManager.RemoveFromRoleAsync(us, "User");
+                        await _userManager.RemoveFromRoleAsync(us, "Manager");
                     }
                         if(us.UserType == 3)
                         {
-                            await _userManager.RemoveFromRoleAsync(us, "Manager");
+                            await _userManager.RemoveFromRoleAsync(us, "User"); 
                         }                
                     
                 if (model.UserType == 1)
