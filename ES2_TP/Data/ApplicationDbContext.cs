@@ -15,8 +15,5 @@ namespace ES2_TP.Data
         public DbSet<ES2_TP.Models.PropostasTrabalho>? PropostasTrabalho { get; set; }
         public DbSet<ES2_TP.Models.Skills>? Skills { get; set; }
         public DbSet<ES2_TP.Models.Talento>? Talento { get; set; }
-        public DbSet<ES2_TP.Models.PropostasTalento>? PropostasTalento { get; set; }
-        public DbSet<ES2_TP.Models.SkillsTalento>? SkillsTalento { get; set; }
-        public DbSet<ES2_TP.Models.DetalheExperiencia>? DetalheExperiencia { get; set; }
     }
 }
