@@ -109,15 +109,17 @@ namespace ES2_TP.Controllers
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 UserType = model.UserType,
-                SecurityStamp = us.SecurityStamp,
-                PasswordHash = us.PasswordHash,
+                //SecurityStamp = us.SecurityStamp,
+                //PasswordHash = us.PasswordHash,
             };
 
             if (ModelState.IsValid)
             {
-                /*try
+                try
                 {
                     await _userManager.UpdateAsync(user);
+                    await _userManager.SetEmailAsync(us, model.Email);
+                    await _userManager.SetUserNameAsync(us, model.Email);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,7 +131,7 @@ namespace ES2_TP.Controllers
                     {
                         throw;
                     }
-                }*/
+                }
                 if (us.UserType == 1)
                 {
                     await _userManager.RemoveFromRoleAsync(us,"Admin");
@@ -152,7 +154,7 @@ namespace ES2_TP.Controllers
                     {
                         await _roleManager.CreateAsync(new IdentityRole("Admin"));
                     }
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    await _userManager.AddToRoleAsync(us, "Admin");
                 }
                 else
                 {
@@ -162,7 +164,7 @@ namespace ES2_TP.Controllers
                         {
                             await _roleManager.CreateAsync(new IdentityRole("User"));
                         }
-                        await _userManager.AddToRoleAsync(user, "User");
+                        await _userManager.AddToRoleAsync(us, "User");
                     }
                     else
                     {
@@ -170,7 +172,7 @@ namespace ES2_TP.Controllers
                         {
                             await _roleManager.CreateAsync(new IdentityRole("Manager"));
                         }
-                        await _userManager.AddToRoleAsync(user, "Manager");
+                        await _userManager.AddToRoleAsync(us, "Manager");
                     }
                 }
                 return RedirectToAction(nameof(Index));
