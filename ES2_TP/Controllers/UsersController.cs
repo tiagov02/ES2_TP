@@ -48,16 +48,7 @@ namespace ES2_TP.Controllers
         {
             return View();
         }
-        /*public FileStreamResult CreateFile(string user, string pwd)
-        {
-            //todo: add some data from your database into that string:
-            var string_with_your_data = "USER: "+user+"\nPassword: "+pwd;
-
-            var byteArray = System.Text.Encoding.ASCII.GetBytes(string_with_your_data);
-            var stream = new MemoryStream(byteArray);
-
-            return File(stream, "text/plain", "UTILIZADOR.txt");
-        }*/
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
