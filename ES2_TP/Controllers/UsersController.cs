@@ -123,20 +123,14 @@ namespace ES2_TP.Controllers
                 {
                     await _userManager.RemoveFromRoleAsync(us,"Admin");
                 }
-                else
-                {
                     if (us.UserType == 2)
                     {
                         await _userManager.RemoveFromRoleAsync(us, "User");
                     }
-                    else
-                    {
                         if(us.UserType == 3)
                         {
                             await _userManager.RemoveFromRoleAsync(us, "Manager");
-                        }
-                    }
-                }
+                        }                
                     
                 if (model.UserType == 1)
                 {
