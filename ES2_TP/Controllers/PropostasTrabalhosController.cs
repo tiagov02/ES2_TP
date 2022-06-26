@@ -45,6 +45,38 @@ namespace ES2_TP.Controllers
 
             return View(propostasTrabalho);
         }
+        public async Task<IActionResult> ApresentaPropostas(Guid id)
+        {
+
+            bool showPrivateTalents = User.IsInRole("Admin");
+
+            var talentos = from m in _context.Talento
+                           select m;
+            var propostasTrabalho = await _context.PropostasTrabalho
+                .Include(e => e.Categoria).Include(e => e.Skill).
+                FirstOrDefaultAsync(m => m.Id == id);
+            string searchString = propostasTrabalho.Skill.descricao;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+
+                talentos = talentos.
+                    Where(s => s.Skill.descricao!.ToLower().Contains(searchString)).
+                    OrderBy(talentos => talentos.nome);
+            }
+
+            if (showPrivateTalents is false)
+            {
+                talentos = talentos.Where(e => e.isPublic == true);
+            }
+
+            talentos = talentos.Include(e => e.Categoria).Include(e => e.Skill);
+
+            ViewBag.searchstring = searchString;
+
+            return View(await talentos.ToListAsync());
+        }
 
         // GET: PropostasTrabalhos/Create
         public IActionResult Create()

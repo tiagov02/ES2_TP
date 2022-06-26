@@ -1,7 +1,7 @@
-﻿@model List<ES2_TP.Controllers.RelPrecoHora>
+﻿@model List<ES2_TP.Controllers.RelPrecoHora2>
 
 @{
-    ViewData["Title"] = "Relatorio";
+    ViewData["Title"] = "RelatorioSkill";
 }
 
 <!DOCTYPE html>
@@ -9,20 +9,17 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Relatório com preço médio mensal por categoria de talento e por skill</title>
+    <title>Relatório com preço médio mensal por skill</title>
 </head>
 <body>
 <table class="table">
     <thead>
     <tr>
         <th>
-            <h2>Talento</h2>
+            <h2>Skill</h2>
         </th>
         <th>
-            <h2>Pais</h2>
-        </th>
-        <th>
-            <h2>Preço Total</h2>
+            <h2>Preço total</h2>
         </th>
         <th></th>
     </tr>
@@ -32,10 +29,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Talento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
+                @Html.DisplayFor(modelItem => item.Skill)
             </td>
             <td>
                  @Html.DisplayFor(modelItem => item.PrecoTotal)

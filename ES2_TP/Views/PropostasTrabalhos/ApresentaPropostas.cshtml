@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ES2_TP.Models.Talento>
+
+@{
+    ViewData["Title"] = "ApresentaPropostas";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+    <form asp-controller="Talentoes" asp-action="Index" method="get">
+        <p>
+            Skill: <input type="text" name="SearchString" value="@ViewBag.searchstring" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.precoHora)*@
+                Preço p/ Hora
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.horasExperiencia)*@
+                Horas de experiência
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nome)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.pais)*@
+                País
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Skill
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.precoHora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.horasExperiencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Skill.descricao)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

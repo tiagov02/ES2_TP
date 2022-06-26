@@ -64,28 +64,30 @@ namespace ES2_TP.Controllers
         {
             Relatorio rel = new();
 
-            var t = await _context.Talento.ToListAsync();
+            var t = await _context.Talento.Include(e=>e.Skill).ToListAsync();
            
 
             foreach (var item in t)
             {
-                rel.precoHorasTalento.Add(new RelPrecoHora() { Talento = item.nome, Pais = item.pais, PrecoTotal = item.precoHora * 176 });
-                Console.WriteLine(" 00");
+                if (item.Skill == null)
+                {
+                    rel.precoHorasTalento.Add(new RelPrecoHora() { Talento = item.Categoria.descricao, Pais = item.pais, PrecoTotal = item.precoHora * 176 });
+                }
             }
 
             return View(rel.precoHorasTalento.ToList());
         }
-        public async Task<IActionResult> Relatorio2()
+        public async Task<IActionResult> RelatorioSkill()
         {
             Relatorio rel = new();
 
-            var t = await _context.Talento.ToListAsync();
+            var t = await _context.Talento.Include(e=>e.Skill).ToListAsync();
 
             foreach (var item in t)
             {
                 rel.precoHorasTalento2.Add(new RelPrecoHora2() { Skill = item.Skill.descricao, PrecoTotal = item.precoHora * 176 });
             }
-            return View(rel);
+            return View(rel.precoHorasTalento2.ToList());
         }
     }
 }
