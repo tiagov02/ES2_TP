@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ES2_TP.Controllers.RelPrecoHora>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Relatório com preço médio mensal por categoria de talento e por skill/title>
+</head>
+<body>
+<table class="table">
+    <tr>
+        <th>
+            <h2>Talento</h2>
+        </th>
+        <th>
+            <h2>Pais</h2>
+        </th>
+        <th>
+            <h2>Preço Total</h2>
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Talento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pais)
+            </td>
+            <td>
+                 @Html.DisplayFor(modelItem => item.PrecoTotal)
+            </td>
+            <th></th>
+        </tr>
+
+    }
+
+    
+</table>
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+</body>
+</html>
