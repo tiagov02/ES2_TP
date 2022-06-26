@@ -69,33 +69,6 @@ namespace ES2_TP.Controllers
                 };
                 await _userManager.CreateAsync(user,"23456qA!");
                 model.Id = user.Id;
-                if (model.UserType == 1)
-                {
-                    if (!await _roleManager.RoleExistsAsync("Admin"))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                    }
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                }
-                else
-                {
-                    if (model.UserType == 2)
-                    {
-                        if (!await _roleManager.RoleExistsAsync("User"))
-                        {
-                            await _roleManager.CreateAsync(new IdentityRole("User"));
-                        }
-                        await _userManager.AddToRoleAsync(user, "User");
-                    }
-                    else
-                    {
-                        if (!await _roleManager.RoleExistsAsync("Manager"))
-                        {
-                            await _roleManager.CreateAsync(new IdentityRole("Manager"));
-                        }
-                        await _userManager.AddToRoleAsync(user, "Manager");
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -129,21 +102,21 @@ namespace ES2_TP.Controllers
             {
                 return NotFound();
             }*/
+            AplicationUser user = new AplicationUser()
+            {
+                Id = id.ToString(),
+                UserName = model.UserName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                UserType = model.UserType,
+                SecurityStamp = us.SecurityStamp,
+                PasswordHash = us.PasswordHash,
+            };
 
             if (ModelState.IsValid)
             {
-                try
+                /*try
                 {
-                    AplicationUser user = new AplicationUser()
-                    {
-                        Id = id.ToString(),
-                        UserName = model.UserName,
-                        Email = model.Email,
-                        PhoneNumber = model.PhoneNumber,
-                        UserType = model.UserType,
-                        SecurityStamp = us.SecurityStamp,
-                        PasswordHash = us.PasswordHash,
-                    };
                     await _userManager.UpdateAsync(user);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -155,6 +128,49 @@ namespace ES2_TP.Controllers
                     else
                     {
                         throw;
+                    }
+                }*/
+                if (model.UserType == 1)
+                {
+                    await _userManager.RemoveFromRoleAsync(us,"Admin");
+                }
+                else
+                {
+                    if (model.UserType == 2)
+                    {
+                        await _userManager.RemoveFromRoleAsync(us, "User");
+                    }
+                    else
+                    {
+                        await _userManager.RemoveFromRoleAsync(us, "Manager");
+                    }
+                }
+                    
+                if (model.UserType == 1)
+                {
+                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    if (model.UserType == 2)
+                    {
+                        if (!await _roleManager.RoleExistsAsync("User"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("User"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+                    else
+                    {
+                        if (!await _roleManager.RoleExistsAsync("Manager"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("Manager"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "Manager");
                     }
                 }
                 return RedirectToAction(nameof(Index));
