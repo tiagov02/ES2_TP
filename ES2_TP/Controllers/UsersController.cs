@@ -109,29 +109,16 @@ namespace ES2_TP.Controllers
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 UserType = model.UserType,
-                //SecurityStamp = us.SecurityStamp,
-                //PasswordHash = us.PasswordHash,
+                SecurityStamp = us.SecurityStamp,
+                PasswordHash = us.PasswordHash,
             };
+            
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await _userManager.UpdateAsync(user);
-                    //await _userManager.SetEmailAsync(us, model.Email);
-                    //await _userManager.SetUserNameAsync(us, model.Email);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (await _userManager.FindByIdAsync(id.ToString())==null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _userManager.UpdateAsync(user);
+                //await _userManager.SetEmailAsync(us, model.Email);
+                //await _userManager.SetUserNameAsync(us, model.Email);
                 if (us.UserType == 1)
                 {
                     await _userManager.RemoveFromRoleAsync(us,"Admin");
@@ -144,7 +131,10 @@ namespace ES2_TP.Controllers
                     }
                     else
                     {
-                        await _userManager.RemoveFromRoleAsync(us, "Manager");
+                        if(us.UserType == 3)
+                        {
+                            await _userManager.RemoveFromRoleAsync(us, "Manager");
+                        }
                     }
                 }
                     
@@ -156,8 +146,7 @@ namespace ES2_TP.Controllers
                     }
                     await _userManager.AddToRoleAsync(us, "Admin");
                 }
-                else
-                {
+               
                     if (model.UserType == 2)
                     {
                         if (!await _roleManager.RoleExistsAsync("User"))
@@ -166,18 +155,17 @@ namespace ES2_TP.Controllers
                         }
                         await _userManager.AddToRoleAsync(us, "User");
                     }
-                    else
-                    {
-                        if (!await _roleManager.RoleExistsAsync("Manager"))
+                        if(model.UserType == 3)
                         {
-                            await _roleManager.CreateAsync(new IdentityRole("Manager"));
+                            if (!await _roleManager.RoleExistsAsync("Manager"))
+                            {
+                                await _roleManager.CreateAsync(new IdentityRole("Manager"));
+                            }
+                            await _userManager.AddToRoleAsync(us, "Manager");
                         }
-                        await _userManager.AddToRoleAsync(us, "Manager");
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(us);
+            return View(user);
         }
 
         public async Task<IActionResult> Details(Guid? id)
