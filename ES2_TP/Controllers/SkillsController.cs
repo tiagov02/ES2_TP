@@ -81,7 +81,7 @@ namespace ES2_TP.Controllers
             {
                 return NotFound();
             }
-            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
+            ViewData["Categoria"] = new SelectList(_context.Categoria.OrderBy(e=>e.descricao), "Id", "descricao");
 
             var skills = await _context.Skills.FindAsync(id);
             if (skills == null)

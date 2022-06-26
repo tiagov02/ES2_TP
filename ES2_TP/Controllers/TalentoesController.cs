@@ -95,7 +95,7 @@ namespace ES2_TP.Controllers
             vista.Add( new TipoVista() { IsPublic = true, Tipo_De_Perfil="Público"  });
             vista.Add(new TipoVista() { IsPublic = false, Tipo_De_Perfil = "Privado" });
             ViewData["Perfil"] = new SelectList(vista, "IsPublic", "Tipo_De_Perfil");*/
-            ViewData["Categoria"] = new SelectList(_context.Categoria, "Id", "descricao");
+            ViewData["Categoria"] = new SelectList(_context.Categoria.OrderBy(s=>s.descricao), "Id", "descricao");
             ViewData["Skill"] = new SelectList(_context.Skills.OrderBy(s => s.descricao), "Id", "descricao");
             return View();
         }
